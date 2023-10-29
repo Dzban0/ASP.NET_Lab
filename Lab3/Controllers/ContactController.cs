@@ -18,7 +18,7 @@ namespace Lab3.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Contact model)
+        public IActionResult Create(Contact model, Dictionary<int, Contact> _contacts)
         {
             if (ModelState.IsValid)
             {
