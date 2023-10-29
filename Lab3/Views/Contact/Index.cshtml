@@ -1,0 +1,34 @@
+﻿@model List<Contact>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Lista kontaktów</h1>
+<a class="btn btn-primary" asp-controller="Contact" asp-action="Create">Dodaj konto</a>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Email)
+        </th>
+        
+    </tr>
+    @foreach (var item in @Model)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Email
+            </td>
+
+           
+        </tr>
+    }
+</table>
