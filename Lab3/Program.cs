@@ -1,12 +1,16 @@
+using Data;
+
 namespace Lab3
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args, WebApplicationBuilder builder)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

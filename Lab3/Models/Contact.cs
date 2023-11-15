@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lab3.Models
@@ -15,7 +16,10 @@ namespace Lab3.Models
         public string Email { get; set; }
         [Phone(ErrorMessage = "Niepoprawny numer telefonu, wpisz cyfry")] 
         public string Phone { get; set; }
-        public DateTime Birth { get; set; }
+        public DateTime? Birth { get; set; }
+        public Priority Priority { get; set; }
+        public int OrganizationId { get; set; }
+        public List<SelectListItem> Organizations { get; set;}
 
     }
 }

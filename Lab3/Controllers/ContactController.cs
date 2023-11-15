@@ -1,5 +1,6 @@
 ﻿using Lab3.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Lab3.Controllers
 {
@@ -14,7 +15,10 @@ namespace Lab3.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            Contact contact = new Contact();
+            contact.Organizations = _contactsService.FindAllOrganizations()
+                .Select();
+            return View(contact);
         }
 
         [HttpPost]
@@ -23,8 +27,7 @@ namespace Lab3.Controllers
             if (ModelState.IsValid)
             {
                 int id = _contacts.Keys.Count != 0 ? _contacts.Keys.Max() : 0;
-                model.Id = id + 1;
-                _contacts.Add(model.Id, model);
+                
 
                 return RedirectToAction("Index");
             }
