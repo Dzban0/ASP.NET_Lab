@@ -1,13 +1,35 @@
-namespace Labolatorium_3
+using Lab3.Models;
+using Microsoft.AspNetCore.Identity;
+
+namespace Laboratorium_3___App
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("AppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AppDbContextConnection' not found.");
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            // builder.Services.AddSingleton<IContactService, MemoryContactService>();
+            builder.Services.AddSingleton<IDateTimeProvider, CurrentDateTimeProvider>();
+            builder.Services.AddSingleton<IReservationService, MemoryReservationService>();
+
+
+
+            builder.Services.AddDbContext<Data.AppDbContext>();
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddTransient<IContactService, EFContactService>();
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddRazorPages();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => SignIn.ReqireConfirmedAccpunt = true).AddEntityFrameworkStores<AppDbContext>();
 
             var app = builder.Build();
 
@@ -23,12 +45,14 @@ namespace Labolatorium_3
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Reservation}/{action=Create}/{id?}");
 
             app.Run();
         }

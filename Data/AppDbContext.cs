@@ -1,14 +1,11 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IdentityRole = Microsoft.AspNetCore.Identity.IdentityRole;
+using IdentityUser = Microsoft.AspNetCore.Identity.IdentityUser;
 
 namespace Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         private string DbPath { get; set; }
         public AppDbContext()
@@ -27,6 +24,34 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            PasswordHasher<IndetityUser> ph = new PasswordHasher<IndetityUser>();
+            var user = new IdentityUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "adam",
+                Email = "adam@wsei.edu.pl",
+                EmailConfirmed = true,
+            };
+
+            user.PasswordHash = ph.HashPassword(user, "1234Ab!");
+
+            modelBuilder.Entity<IdentityUser>()
+                .HasData(user);
+
+            var adminRole = new IdentityRole()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "admin",
+                NormalizedName = "ADMIN"
+            };
+
+            adminRole.ConcurrencyStamp = adminRole.Id;
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(
+                    adminRole
+                );
+
             modelBuilder.Entity<ContactEntity>()
                 .HasOne(c => c.Organization)
                 .WithMany(o => o.Contacts)

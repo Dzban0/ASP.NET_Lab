@@ -8,6 +8,10 @@ namespace Labolatorium_3.Controllers
     public class OrganizationsController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
+        public OrganizationsController()
+        {
+            _appDbContext = new AppDbContext();
+        }
         public IActionResult GetFilterOrganization(string q)
         {
             var result = _appDbContext.Organizations

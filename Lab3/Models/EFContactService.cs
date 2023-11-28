@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Labolatorium_3.Models;
 
 namespace Lab3.Models
 {
@@ -49,6 +50,16 @@ namespace Lab3.Models
         public void Update(Contact contact)
         {
             _context.Contacts.Update(ContactMapper.ToEntity(contact));
+        }
+
+        public PageList<Contact> FindPage(int page, int size)
+        {
+            int totalCount = _context.Contacts.Count();
+            List<Contact> contacts = _context.Contacts
+                .Skip((page - 1) * size)
+                .Take(size)
+                .ToList();
+            return PageList<Contact>.Create(contacts, totalCount, page, size);
         }
     }
 }
