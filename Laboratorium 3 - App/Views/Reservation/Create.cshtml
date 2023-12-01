@@ -1,0 +1,43 @@
+﻿@model Reservation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Rezerwacja</h1>
+<form asp-controller="Reservation" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Data">Data</label>
+        <input class="form-control" asp-for="Data" />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Miasto">Miasto</label>
+        <input class="form-control" asp-for="Miasto" />
+        <span asp-validation-for="Miasto" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Adres">Adres</label>
+        <input class="form-control" asp-for="Adres" />
+        <span asp-validation-for="Adres" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Pokoj">Pokoj</label>
+        <select class="form-control" asp-for="Pokoj" asp-items="@Html.GetEnumSelectList<Rooms>()"></select>
+        <span asp-validation-for="Pokoj" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Wlasciciel">Właściciel</label>
+        <input class="form-control" asp-for="Wlasciciel" />
+        <span asp-validation-for="Wlasciciel" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Cena">Cena</label>
+        <input class="form-control" asp-for="Cena" />
+        <span asp-validation-for="Cena" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Zapisz</button>
+        <a class="btn btn-primary" asp-controler="Reservation" asp-action="Index">Powrót</a>
+    </div>
+</form>

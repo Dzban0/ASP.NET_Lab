@@ -1,0 +1,45 @@
+﻿@model List<Reservation>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Rezerwacje</h1>
+<div>
+    <table class="table">
+        <tr>           
+            <th>
+                @Html.DisplayNameFor(model => model[0].Adres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Pokoj)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Wlasciciel)
+            </th>
+        </tr>
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td>
+                    @item.Adres
+                </td>
+                <td>
+                    @item.Pokoj
+                </td>
+                <td>
+                    @item.Wlasciciel
+                </td>
+                <td>
+                    <a class="btn btn-outline-info" asp-controller="Reservation" asp-action="Details" asp-route-id="@item.Id">Szczgóły</a>
+                    <a class="btn btn-outline-primary" asp-controller="Reservation" asp-action="Update" asp-route-id="@item.Id">Edycja</a>
+                    <a class="btn btn-outline-danger" asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                </td>
+
+            </tr>
+        }
+    </table>
+    <div class="mb-3">
+        <a class="btn btn-primary" asp-controller="Reservation" asp-action="Create">Dodaj rezerwację</a>
+    </div>
+</div>
