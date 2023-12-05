@@ -16,6 +16,10 @@ namespace Laboratorium_3___App.Controllers
             _dateTimeProvider = dateTimeProvider;
         }
 
+        public ContactController(IContactService service)
+        {
+        }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -37,10 +41,6 @@ namespace Laboratorium_3___App.Controllers
         {
             if (ModelState.IsValid)
             {
-                // dodaj model do bazy lub kolekcji 
-                //model.ID = id++;
-                //_contacts.Add(model.ID, model);
-                //return RedirectToAction("Index");
                 _contactService.Add(model);
                 return RedirectToAction("Index");
             }
