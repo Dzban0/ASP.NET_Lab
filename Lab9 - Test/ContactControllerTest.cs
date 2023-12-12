@@ -6,45 +6,44 @@ namespace Lab9___Test
 {
     public class ContactControllerTest
     {
-        private ContactController _controller;
+        private ContactController _contact;
         private IContactService _service;
 
         public ContactControllerTest()
         {
-            _service = new MemoryContactService();
-            _service.Add(new Contact() { Id=1 });
+            _service = new MemoryContactService(new CurrentDateTimeProvider());
+            _service.Add(new Contact() { Id = 1 });
             _service.Add(new Contact() { Id = 2 });
-            _controller = new ContactController(_service);
+            _contact = new ContactController(_service);
         }
 
         [Fact]
         public void IndexTest()
         {
-            var result = _controller.Index();
+            var result = _contact.Index();
             Assert.IsType<ViewResult>(result);
             var view = result as ViewResult;
             var model = view.Model as List<Contact>;
-            Assert.Equal(2, model.Count)
-;       }
-
+            Assert.Equal(2, model.Count());
+        }
+        [Theory]
         [InlineData(1)]
         [InlineData(2)]
-        [Fact]
-        public void DetailsTestForExisitingContatcs()
+
+        public void DeatailsTest(int id)
         {
-            var result = _controller.Index();
+            var result = _contact.Details(id);
             Assert.IsType<ViewResult>(result);
             var view = result as ViewResult;
             var model = view.Model as Contact;
-            Assert.Equal(1, model.Id)
-;
+            Assert.Equal(id, model.Id);
         }
-
         [Fact]
-        public void DetailsTestForNonExisitingContatcs()
+        public void DeatailstestForNonExistingContact()
         {
-            var result = _controller.Details(3);
+            var result = _contact.Details(3);
             Assert.IsType<NotFoundResult>(result);
+
         }
     }
 }
