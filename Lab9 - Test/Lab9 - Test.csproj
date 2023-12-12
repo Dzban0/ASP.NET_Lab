@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Laboratorium 3 - App\Laboratorium 3 - App.csproj" />
+    <ProjectReference Include="..\Laboratorium 3 - App\Lab3 - App.csproj" />
   </ItemGroup>
 
 </Project>
